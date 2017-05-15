@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "882002507153",
+    "project_id": "ivideos-160819"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882002507153:android:27b8cde4b400a829",
+        "android_client_info": {
+          "package_name": "com.hammersmith.ivideos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882002507153-7qmfotdt8kd1ivkoskbti7ko5gjng2ca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hammersmith.ivideos",
+            "certificate_hash": "9128a4cfee443ae2158530a26165c3184e9f9f19"
+          }
+        },
+        {
+          "client_id": "882002507153-v3iioab000gcj501ure5brohgbs7fmm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxCQlwNcdVXAWS5iwOWfK47-AnG9_H-Is"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

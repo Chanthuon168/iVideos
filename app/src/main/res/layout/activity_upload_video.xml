@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="30dp"
+    tools:context="com.hammersmith.ivideos.ActivityUploadVideo">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ldp_logo" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimary"
+        android:text="League For Democracy Party​"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:inputType="number"
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Video category"
+            android:lines="1" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Video key"
+            android:lines="1" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/save"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:layout_marginTop="30dp"
+        android:text="Save video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
