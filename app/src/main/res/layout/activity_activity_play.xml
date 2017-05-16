@@ -98,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="25dp"
-                        android:src="@drawable/bookmarked" />
+                        android:src="@drawable/bookmark" />
 
                 </LinearLayout>
             </LinearLayout>

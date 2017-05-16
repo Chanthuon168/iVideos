@@ -1,5 +1,6 @@
 package com.hammersmith.ivideos;
 
+import com.hammersmith.ivideos.model.Favorite;
 import com.hammersmith.ivideos.model.News;
 import com.hammersmith.ivideos.model.User;
 import com.hammersmith.ivideos.model.Video;
@@ -16,11 +17,11 @@ import retrofit2.http.Path;
  * Created by Chan Thuon on 9/9/2016.
  */
 public interface ApiInterface {
-    @GET("video")
-    Call<List<Video>> getAllVideo();
+    @POST("video")
+    Call<List<Video>> getAllVideo(@Body Video video);
 
-    @GET("video/{id}")
-    Call<List<Video>> getVideo(@Path("id") int id);
+    @POST("video/category")
+    Call<List<Video>> getVideo(@Body Video video);
 
     @GET("news")
     Call<List<News>> getNews();
@@ -30,4 +31,14 @@ public interface ApiInterface {
 
     @POST("create/deviceToken")
     Call<User> createDeviceToken(@Body User user);
+
+    @POST("create/favorite")
+    Call<Favorite> createFavorite(@Body Favorite favorite);
+
+    @POST("video/favorite")
+    Call<List<Video>> getVideoFavorite(@Body Video video);
+
+    @POST("delete/favorite")
+    Call<List<Video>> deleteFavorite(@Body Favorite favorite);
+
 }

@@ -54,11 +54,13 @@ public class VideoPlayAdapter extends RecyclerView.Adapter<VideoPlayAdapter.MyVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent("custom-message");
+                intent.putExtra("id", videos.get(position).getId());
                 intent.putExtra("code", videos.get(position).getCode());
                 intent.putExtra("title", videos.get(position).getTitle());
                 intent.putExtra("viewCount", videos.get(position).getViewCount());
                 intent.putExtra("likeCount", videos.get(position).getLikeCount());
                 intent.putExtra("dislikeCount", videos.get(position).getDislikeCount());
+                intent.putExtra("favorite", videos.get(position).getFavorite());
                 LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
 
             }

@@ -13,8 +13,11 @@ import android.view.ViewGroup;
 
 import com.hammersmith.ivideos.ApiClient;
 import com.hammersmith.ivideos.ApiInterface;
+import com.hammersmith.ivideos.PrefUtils;
 import com.hammersmith.ivideos.R;
+import com.hammersmith.ivideos.adapter.FavoriteAdapter;
 import com.hammersmith.ivideos.adapter.VideoAdapter;
+import com.hammersmith.ivideos.model.User;
 import com.hammersmith.ivideos.model.Video;
 
 import java.util.ArrayList;
@@ -31,11 +34,13 @@ public class FragmentFavourite extends Fragment {
     private List<Video> videos = new ArrayList<>();
     private RecyclerView recyclerView;
     private GridLayoutManager layoutManager;
-    private VideoAdapter adapter;
+    private FavoriteAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
     private int sizeVideo;
     private boolean loading = true;
     private int pastVisiblesItems, visibleItemCount, totalItemCount;
+    private User user;
+    private Video video;
 
     public FragmentFavourite() {
     }
@@ -44,6 +49,7 @@ public class FragmentFavourite extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        user = PrefUtils.getCurrentUser(getActivity());
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
@@ -60,42 +66,41 @@ public class FragmentFavourite extends Fragment {
             }
         });
 
-        ApiInterface service = ApiClient.getClient().create(ApiInterface.class);
-        Call<List<Video>> callComment = service.getVideo(1);
-        callComment.enqueue(new Callback<List<Video>>() {
-            @Override
-            public void onResponse(Call<List<Video>> call, Response<List<Video>> response) {
-                videos = response.body();
-                sizeVideo = videos.size();
-                swipeRefresh.setRefreshing(false);
-                if (videos.size() > 0) {
-                    adapter = new VideoAdapter(getActivity(), videos);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+        if (PrefUtils.getCurrentUser(getActivity()) != null) {
+            video = new Video(user.getDeviceToken());
+            ApiInterface service = ApiClient.getClient().create(ApiInterface.class);
+            Call<List<Video>> callComment = service.getVideoFavorite(video);
+            callComment.enqueue(new Callback<List<Video>>() {
+                @Override
+                public void onResponse(Call<List<Video>> call, Response<List<Video>> response) {
+                    videos = response.body();
+                    sizeVideo = videos.size();
+                    swipeRefresh.setRefreshing(false);
+                    if (videos.size() > 0) {
+                        adapter = new FavoriteAdapter(getActivity(), videos);
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<Video>> call, Throwable t) {
-                swipeRefresh.setRefreshing(false);
-            }
-        });
+                @Override
+                public void onFailure(Call<List<Video>> call, Throwable t) {
+                    swipeRefresh.setRefreshing(false);
+                }
+            });
+        }
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
-        {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0) //check for scroll down
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
                 {
                     visibleItemCount = layoutManager.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
                     pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
-                    if (loading)
-                    {
-                        if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
-                        {
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             loading = false;
                             Log.v("...", "Last Item Wow !");
                             //Do pagination.. i.e. fetch new data
@@ -110,13 +115,13 @@ public class FragmentFavourite extends Fragment {
 
     public void refreshData() {
         ApiInterface service = ApiClient.getClient().create(ApiInterface.class);
-        Call<List<Video>> callComment = service.getVideo(1);
+        Call<List<Video>> callComment = service.getVideoFavorite(video);
         callComment.enqueue(new Callback<List<Video>>() {
             @Override
             public void onResponse(Call<List<Video>> call, Response<List<Video>> response) {
                 videos = response.body();
                 if (sizeVideo != videos.size()) {
-                    adapter = new VideoAdapter(getActivity(), videos);
+                    adapter = new FavoriteAdapter(getActivity(), videos);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     sizeVideo = videos.size();

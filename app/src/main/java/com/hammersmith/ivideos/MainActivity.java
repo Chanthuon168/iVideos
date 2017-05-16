@@ -45,10 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ViewPager viewPager;
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
-
-    private User user, userPre;
     private static final String TAG = MainActivity.class.getSimpleName();
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -76,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        setupViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
 
         mAdView = (AdView) findViewById(R.id.adView);
@@ -100,67 +95,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                //Check type of intent filter
-                if (intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_SUCCESS)) {
-                    //Registration success
-                    String token = intent.getStringExtra("token");
-                    Log.e("token", token);
-                    if (token != null) {
-                        userPre = new User();
-                        userPre.setDeviceToken(token);
-                        PrefUtils.setCurrentUser(userPre, MainActivity.this);
-
-                        user = new User(token);
-                        ApiInterface serviceDeviceToken = ApiClient.getClient().create(ApiInterface.class);
-                        Call<User> callDeviceToken = serviceDeviceToken.createDeviceToken(user);
-                        callDeviceToken.enqueue(new Callback<User>() {
-                            @Override
-                            public void onResponse(Call<User> call, Response<User> response) {
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<User> call, Throwable t) {
-
-                            }
-                        });
-                    }
-//                    Toast.makeText(getApplicationContext(), "GCM token:" + token, Toast.LENGTH_LONG).show();
-                } else if (intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_ERROR)) {
-                    //Registration error
-                    Toast.makeText(getApplicationContext(), "GCM registration error!!!", Toast.LENGTH_LONG).show();
-                } else {
-                    Log.e("token", "no");
-                }
-            }
-        };
-
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_SUCCESS));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_ERROR));
-
-        //Check status of Google play service in device
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-        if (ConnectionResult.SUCCESS != resultCode) {
-            //Check type of error
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                Toast.makeText(getApplicationContext(), "Google Play Service is not install/enabled in this device!", Toast.LENGTH_LONG).show();
-                //So notification
-                GooglePlayServicesUtil.showErrorNotification(resultCode, getApplicationContext());
-            } else {
-                Toast.makeText(getApplicationContext(), "This device does not support for Google Play Service!", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            //Start service
-            Intent itent = new Intent(this, GCMRegistrationIntentService.class);
-            startService(itent);
-        }
-
+        tabLayout.setupWithViewPager(viewPager);
+        setupViewPager(viewPager);
     }
 
     private void showInterstitial() {
@@ -184,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         super.onPause();
         Log.w("MainActivity", "onPause");
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
     }
 
     @Override
@@ -227,7 +163,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_camera) {
             startActivity(new Intent(MainActivity.this, ActivityUploadVideo.class));
         } else if (id == R.id.nav_gallery) {
-
+            PrefUtils.clearCurrentUser(MainActivity.this);
+            Toast.makeText(getApplicationContext(),"cleared",Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

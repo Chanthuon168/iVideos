@@ -24,13 +24,29 @@ public class Video {
     private String dislikeCount;
     @SerializedName("msg")
     private String msg;
+    @SerializedName("favorite")
+    private String favorite;
+    @SerializedName("token")
+    private String token;
 
     public Video() {
     }
 
-    public Video(int catId, String code) {
+    public Video(int catId, String token) {
         this.catId = catId;
-        this.code = code;
+        this.token = token;
+    }
+
+    public Video(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public int getCatId() {
@@ -103,5 +119,13 @@ public class Video {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(String favorite) {
+        this.favorite = favorite;
     }
 }

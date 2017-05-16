@@ -34,7 +34,7 @@ import retrofit2.Response;
 /**
  * Created by Chan Thuon on 3/8/2017.
  */
-public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder>{
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>{
     private Context context;
     private List<Video> videos;
     private Activity activity;
@@ -42,7 +42,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
     private Favorite favorite;
     private User user;
 
-    public VideoAdapter(Activity activity, List<Video> videos){
+    public FavoriteAdapter(Activity activity, List<Video> videos){
         this.activity = activity;
         this.videos = videos;
         custom_font = Typeface.createFromAsset(activity.getAssets(), "fonts/ASENINE_.ttf");
@@ -75,10 +75,22 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
                         favorite = response.body();
                         if (favorite.getMsg().equals("checked")) {
                             holder.bookmark.setImageResource(R.drawable.bookmarked);
-                        } else {
-                            holder.bookmark.setImageResource(R.drawable.bookmark_item);
+                            favorite = new Favorite(user.getDeviceToken(), videos.get(position).getId());
+                            ApiInterface mService = ApiClient.getClient().create(ApiInterface.class);
+                            Call<List<Video>> mCall = mService.deleteFavorite(favorite);
+                            mCall.enqueue(new Callback<List<Video>>() {
+                                @Override
+                                public void onResponse(Call<List<Video>> call, Response<List<Video>> response) {
+                                    videos = response.body();
+                                    notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onFailure(Call<List<Video>> call, Throwable t) {
+
+                                }
+                            });
                         }
-                        videos.get(position).setFavorite(favorite.getMsg());
                     }
 
                     @Override
