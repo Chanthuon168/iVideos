@@ -5,31 +5,39 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Upload" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_forum"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Forum" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_popuar"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Popular" />
+        <item
+            android:id="@+id/nav_song"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Song" />
+        <item
+            android:id="@+id/nav_life"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Life Lesson" />
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="News" />
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Setting" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Sign Out" />
         </menu>
     </item>
 

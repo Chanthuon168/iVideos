@@ -37,8 +37,6 @@ public class FragmentNews extends Fragment {
     private NewsAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
     private int sizeVideo;
-    private boolean loading = true;
-    private int pastVisiblesItems, visibleItemCount, totalItemCount;
 
     public FragmentNews() {
     }
@@ -81,30 +79,6 @@ public class FragmentNews extends Fragment {
             @Override
             public void onFailure(Call<List<News>> call, Throwable t) {
                 swipeRefresh.setRefreshing(false);
-            }
-        });
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
-        {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0) //check for scroll down
-                {
-                    visibleItemCount = layoutManager.getChildCount();
-                    totalItemCount = layoutManager.getItemCount();
-                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
-
-                    if (loading)
-                    {
-                        if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
-                        {
-                            loading = false;
-                            Log.v("...", "Last Item Wow !");
-                            //Do pagination.. i.e. fetch new data
-                        }
-                    }
-                }
             }
         });
 

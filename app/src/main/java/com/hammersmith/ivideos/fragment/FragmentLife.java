@@ -36,8 +36,6 @@ public class FragmentLife extends Fragment {
     private VideoAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
     private int sizeVideo;
-    private boolean loading = true;
-    private int pastVisiblesItems, visibleItemCount, totalItemCount;
     private User user;
     private Video video;
 
@@ -88,27 +86,6 @@ public class FragmentLife extends Fragment {
                 }
             });
         }
-
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0) //check for scroll down
-                {
-                    visibleItemCount = layoutManager.getChildCount();
-                    totalItemCount = layoutManager.getItemCount();
-                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
-
-                    if (loading) {
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            loading = false;
-                            Log.v("...", "Last Item Wow !");
-                            //Do pagination.. i.e. fetch new data
-                        }
-                    }
-                }
-            }
-        });
 
         return view;
     }

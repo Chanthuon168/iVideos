@@ -162,17 +162,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_camera) {
             startActivity(new Intent(MainActivity.this, ActivityUploadVideo.class));
-        } else if (id == R.id.nav_gallery) {
-            PrefUtils.clearCurrentUser(MainActivity.this);
-            Toast.makeText(getApplicationContext(),"cleared",Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_forum) {
+            Intent intent = new Intent(MainActivity.this, ForumActivity.class);
+            intent.putExtra("title", "Forum");
+            intent.putExtra("id", 1);
+            startActivity(intent);
+        } else if (id == R.id.nav_popuar) {
+            Intent intent = new Intent(MainActivity.this, ForumActivity.class);
+            intent.putExtra("title", "Popular");
+            intent.putExtra("id", 2);
+            startActivity(intent);
+        } else if (id == R.id.nav_song) {
+            Intent intent = new Intent(MainActivity.this, ForumActivity.class);
+            intent.putExtra("title", "Song");
+            intent.putExtra("id", 3);
+            startActivity(intent);
+        } else if (id == R.id.nav_life) {
+            Intent intent = new Intent(MainActivity.this, ForumActivity.class);
+            intent.putExtra("title", "Life Lesson");
+            intent.putExtra("id", 4);
+            startActivity(intent);
+        } else if (id == R.id.nav_news) {
+            Intent intent = new Intent(MainActivity.this, ForumActivity.class);
+            intent.putExtra("title", "New");
+            intent.putExtra("id", 1);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

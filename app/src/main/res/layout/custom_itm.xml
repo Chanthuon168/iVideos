@@ -22,11 +22,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:scaleType="centerCrop" />
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/ldp_logo_small" />
+                    </LinearLayout>
+
+                    <View
+                        android:background="@color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"/>
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

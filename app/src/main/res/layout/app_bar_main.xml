@@ -40,7 +40,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ldp_logo" />
+                        android:src="@drawable/ldp_logo_small" />
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -3,7 +3,7 @@
     <color name="colorPrimary">#2e308c</color>
     <color name="colorPrimaryLight">#4d877e</color>
     <color name="colorPrimaryDark">#1f2176</color>
-    <color name="colorAccent">#01adf0</color>
+    <color name="colorAccent">#2198c6</color>
     <color name="primaryText">#363636</color>
     <color name="secondText">#8f8f8f</color>
     <color name="divider">#dedede</color>
@@ -12,5 +12,6 @@
     <color name="grayLight">#e7e7e7</color>
     <color name="line">#c7c7c7</color>
     <color name="black_overlay">#66000000</color>
-    <color name="whiteTransparent">#90ffffff</color>
+    <color name="whiteTransparent">#bbffffff</color>
+    <color name="transparent">#70ffffff</color>
 </resources>

@@ -1,20 +1,16 @@
-package com.hammersmith.ivideos.fragment;
+package com.hammersmith.ivideos;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.hammersmith.ivideos.ApiClient;
-import com.hammersmith.ivideos.ApiInterface;
-import com.hammersmith.ivideos.PrefUtils;
-import com.hammersmith.ivideos.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.hammersmith.ivideos.adapter.VideoAdapter;
 import com.hammersmith.ivideos.model.User;
 import com.hammersmith.ivideos.model.Video;
@@ -26,10 +22,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by Chan Thuon on 4/27/2017.
- */
-public class FragmentSong extends Fragment {
+public class ForumActivity extends AppCompatActivity {
+    private Toolbar toolbar;
     private List<Video> videos = new ArrayList<>();
     private RecyclerView recyclerView;
     private GridLayoutManager layoutManager;
@@ -38,19 +32,40 @@ public class FragmentSong extends Fragment {
     private int sizeVideo;
     private User user;
     private Video video;
+    private String title;
+    private int id;
+    private AdView mAdView;
 
-    public FragmentSong() {
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        user = PrefUtils.getCurrentUser(getActivity());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_forum);
+        user = PrefUtils.getCurrentUser(ForumActivity.this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
-        layoutManager = new GridLayoutManager(getActivity(), 2);
+        title = getIntent().getStringExtra("title");
+        id = getIntent().getIntExtra("id", 2);
+
+        toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("6259F0B7B9D7BDA232B32593E9E52A5A")
+                .build();
+        mAdView.loadAd(adRequest);
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setNestedScrollingEnabled(false);
         swipeRefresh.setRefreshing(true);
@@ -63,8 +78,8 @@ public class FragmentSong extends Fragment {
             }
         });
 
-        if (PrefUtils.getCurrentUser(getActivity()) != null){
-            video = new Video(3, user.getDeviceToken());
+        if (PrefUtils.getCurrentUser(ForumActivity.this) != null) {
+            video = new Video(id, user.getDeviceToken());
             ApiInterface service = ApiClient.getClient().create(ApiInterface.class);
             Call<List<Video>> callComment = service.getVideo(video);
             callComment.enqueue(new Callback<List<Video>>() {
@@ -74,7 +89,7 @@ public class FragmentSong extends Fragment {
                     sizeVideo = videos.size();
                     swipeRefresh.setRefreshing(false);
                     if (videos.size() > 0) {
-                        adapter = new VideoAdapter(getActivity(), videos);
+                        adapter = new VideoAdapter(ForumActivity.this, videos);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }
@@ -87,7 +102,29 @@ public class FragmentSong extends Fragment {
             });
         }
 
-        return view;
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     public void refreshData() {
@@ -98,7 +135,7 @@ public class FragmentSong extends Fragment {
             public void onResponse(Call<List<Video>> call, Response<List<Video>> response) {
                 videos = response.body();
                 if (sizeVideo != videos.size()) {
-                    adapter = new VideoAdapter(getActivity(), videos);
+                    adapter = new VideoAdapter(ForumActivity.this, videos);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     sizeVideo = videos.size();
@@ -108,7 +145,7 @@ public class FragmentSong extends Fragment {
 
             @Override
             public void onFailure(Call<List<Video>> call, Throwable t) {
-                swipeRefresh.setRefreshing(false);
+
             }
         });
     }

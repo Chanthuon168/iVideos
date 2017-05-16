@@ -54,6 +54,7 @@
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.hammersmith.tinhluoklan" />
             </intent-filter>
         </receiver>
@@ -78,7 +79,9 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
@@ -105,7 +108,10 @@
         <activity
             android:name=".ImageActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".ActivityUploadVideo"></activity>
+        <activity android:name=".ActivityUploadVideo" />
+        <activity
+            android:name=".ForumActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
