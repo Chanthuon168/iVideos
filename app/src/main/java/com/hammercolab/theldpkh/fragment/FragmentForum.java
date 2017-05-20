@@ -85,7 +85,7 @@ public class FragmentForum extends Fragment {
     private void getVideoCategory(final int page) {
 
         if (PrefUtils.getCurrentUser(getActivity()) != null) {
-            video = new Video(1, user.getDeviceToken());
+            video = new Video(1, user.getSession());
             ApiInterface service = ApiClient.getClient().create(ApiInterface.class);
             Call<List<Video>> callComment = service.getVideo(video, page);
             callComment.enqueue(new Callback<List<Video>>() {
