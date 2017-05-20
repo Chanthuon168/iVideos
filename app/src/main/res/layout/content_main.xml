@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/grayLight"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.hammersmith.ivideos.MainActivity"
+    tools:context="com.hammercolab.theldpkh.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <LinearLayout

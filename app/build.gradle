@@ -5,11 +5,12 @@ android {
     buildToolsVersion "24.0.3"
 
     defaultConfig {
-        applicationId "com.hammersmith.ivideos"
+        applicationId "com.hammercolab.theldpkh"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -17,12 +18,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile files('libs/picasso-2.5.2.jar')
+    compile files('libs/PhotoUtil.jar')
     compile files('libs/YouTubeAndroidPlayerApi.jar')
     // (v2.0.0)
     compile group: 'commons-io', name: 'commons-io', version: '2.0.1'
@@ -39,5 +44,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.6.1'
     compile 'com.google.android.gms:play-services-auth:9.6.1'
     compile 'com.google.android.gms:play-services-gcm:9.6.1'
+    compile 'com.android.support:multidex:1.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

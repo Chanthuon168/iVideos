@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/grayLight"
     android:orientation="vertical"
-    tools:context="com.hammersmith.ivideos.ActivityPlay">
+    tools:context="com.hammercolab.theldpkh.ActivityPlay">
 
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/youtube_view"

@@ -6,12 +6,13 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="30dp"
-    tools:context="com.hammersmith.ivideos.ActivityUploadVideo">
+    tools:context="com.hammercolab.theldpkh.ActivityUploadVideo">
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ldp_logo" />
+        android:src="@drawable/ldp_logo_small" />
 
     <TextView
         android:layout_marginTop="10dp"

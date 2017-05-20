@@ -6,20 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.hammersmith.ivideos.SlashScreen">
+    tools:context="com.hammercolab.theldpkh.SlashScreen">
 
     <ImageView
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:src="@drawable/ldp_logo"/>
-
-    <TextView
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-light"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:text="League For Democracy Party​"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/slash_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

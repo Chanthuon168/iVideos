@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">LDP Cambodia</string>
+    <string name="app_name">The LDP KH</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="server_key">AIzaSyBw8Xx-fO674Qzv5YTKDPaVxL3TJTkaWFg</string>
-    <string name="google_key">AIzaSyBxCQlwNcdVXAWS5iwOWfK47-AnG9_H-Is</string>
+    <string name="server_key">AIzaSyA7OthCXiBHtZmVKmr-UTde81Wn5XCjnnY</string>
+    <string name="google_key">AIzaSyCY5xZ3VdhMwJp4IM_w55wC7RlDGrtHp-Q</string>
 
     <string name="action_settings">Settings</string>
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
@@ -15,4 +15,5 @@
 
     <string name="banner_home_footer"> ca-app-pub-9850528227996386/4813361153</string>
     <string name="interstitial_full_screen">ca-app-pub-9850528227996386/7766827554</string>
+    <string name="copyright">Copyright \u00a9 2017</string>
 </resources>
