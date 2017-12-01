@@ -30,6 +30,8 @@ public class Video {
     private String token;
     @SerializedName("user_session")
     private String session;
+    @SerializedName("keyword")
+    private String key;
 
     public Video() {
     }
@@ -37,6 +39,19 @@ public class Video {
     public Video(int catId, String session) {
         this.catId = catId;
         this.session = session;
+    }
+
+    public Video(String key, String session) {
+        this.key = key;
+        this.session = session;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getSession() {

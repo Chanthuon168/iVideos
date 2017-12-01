@@ -23,6 +23,7 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
     private SwitchCompat switchCompat;
     private User user, mUser;
     private Setting setting;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,14 +79,14 @@ public class ActivitySetting extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.feedback:
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "thuondeveloper@gmail.com", null));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "LDP Cambodia's Feedback");
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "The LDP KH's Feedback");
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
                 break;
             case R.id.shareApp:
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_SUBJECT, "Sharing URL");
-                i.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.hammercolab.theldpkh");
+                i.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=" + getPackageName());
                 startActivity(Intent.createChooser(i, "Share with"));
                 break;
             case R.id.rating:

@@ -1,0 +1,50 @@
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    contentInsetLeft="72dp"
+    contentInsetStart="72dp"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary"
+    android:elevation="4dp"
+    android:minHeight="?attr/actionBarSize"
+    app:contentInsetLeft="72dp"
+    app:contentInsetStart="62dp"
+    app:popupTheme="@style/AppTheme.PopupOverlay"
+    android:theme="@style/AppTheme.AppBarOverlay">
+
+    <LinearLayout
+        android:id="@+id/search_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:hint="Search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="2dp"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textColorHint="#b3ffffff" />
+
+        <ImageView
+            android:padding="10dp"
+            android:src="@drawable/cross"
+            android:id="@+id/search_clear"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="16dp" />
+    </LinearLayout>
+</android.support.v7.widget.Toolbar>

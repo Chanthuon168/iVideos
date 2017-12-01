@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "882002507153",
-    "project_id": "ivideos-160819"
+    "project_number": "758278693113",
+    "project_id": "the-ldp-kh"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:882002507153:android:27b8cde4b400a829",
+        "mobilesdk_app_id": "1:758278693113:android:4a4b6227f910bcc9",
         "android_client_info": {
-          "package_name": "com.hammersmith.ivideos"
+          "package_name": "com.hammercolab.theldpkh"
         }
       },
       "oauth_client": [
         {
-          "client_id": "882002507153-7qmfotdt8kd1ivkoskbti7ko5gjng2ca.apps.googleusercontent.com",
+          "client_id": "758278693113-aqod6k815pj19ccdl7inji1ammj2ujhf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.hammersmith.ivideos",
+            "package_name": "com.hammercolab.theldpkh",
             "certificate_hash": "9128a4cfee443ae2158530a26165c3184e9f9f19"
           }
         },
         {
-          "client_id": "882002507153-v3iioab000gcj501ure5brohgbs7fmm5.apps.googleusercontent.com",
+          "client_id": "758278693113-0vv02m3bvqkgbtcf61hn75e3r5ogsgsk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBxCQlwNcdVXAWS5iwOWfK47-AnG9_H-Is"
+          "current_key": "AIzaSyCY5xZ3VdhMwJp4IM_w55wC7RlDGrtHp-Q"
         }
       ],
       "services": {

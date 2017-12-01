@@ -1,5 +1,6 @@
 package com.hammercolab.theldpkh;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;

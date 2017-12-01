@@ -48,7 +48,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_itm, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
     }
@@ -61,41 +61,41 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
         Picasso.with(context).load(uri).into(holder.imageView);
         holder.title.setText(videos.get(position).getTitle());
         String viewCount = videos.get(position).getViewCount();
-        if (!viewCount.equals("")) {
-            String views = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(viewCount));
-            holder.views.setText(views + " views");
-        }
+//        if (!viewCount.equals("")) {
+//            String views = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(viewCount));
+//            holder.views.setText(views + " views");
+//        }
 
-        holder.bookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                favorite = new Favorite(user.getSession(), videos.get(position).getId());
-                ApiInterface service = ApiClient.getClient().create(ApiInterface.class);
-                final Call<Favorite> favoriteCall = service.createFavorite(favorite);
-                favoriteCall.enqueue(new Callback<Favorite>() {
-                    @Override
-                    public void onResponse(Call<Favorite> call, Response<Favorite> response) {
-                        favorite = response.body();
-                        if (favorite.getMsg().equals("checked")) {
-                            holder.bookmark.setImageResource(R.drawable.bookmarked);
-                        } else {
-                            holder.bookmark.setImageResource(R.drawable.bookmark);
-                        }
-                        videos.get(position).setFavorite(favorite.getMsg());
-                    }
-
-                    @Override
-                    public void onFailure(Call<Favorite> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-        if (videos.get(position).getFavorite().equals("checked")) {
-            holder.bookmark.setImageResource(R.drawable.bookmarked);
-        } else {
-            holder.bookmark.setImageResource(R.drawable.bookmark);
-        }
+//        holder.bookmark.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                favorite = new Favorite(user.getSession(), videos.get(position).getId());
+//                ApiInterface service = ApiClient.getClient().create(ApiInterface.class);
+//                final Call<Favorite> favoriteCall = service.createFavorite(favorite);
+//                favoriteCall.enqueue(new Callback<Favorite>() {
+//                    @Override
+//                    public void onResponse(Call<Favorite> call, Response<Favorite> response) {
+//                        favorite = response.body();
+//                        if (favorite.getMsg().equals("checked")) {
+//                            holder.bookmark.setImageResource(R.drawable.bookmarked);
+//                        } else {
+//                            holder.bookmark.setImageResource(R.drawable.bookmark);
+//                        }
+//                        videos.get(position).setFavorite(favorite.getMsg());
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Favorite> call, Throwable t) {
+//
+//                    }
+//                });
+//            }
+//        });
+//        if (videos.get(position).getFavorite().equals("checked")) {
+//            holder.bookmark.setImageResource(R.drawable.bookmarked);
+//        } else {
+//            holder.bookmark.setImageResource(R.drawable.bookmark);
+//        }
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,17 +120,17 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView, bookmark;
-        TextView title, views;
+        ImageView imageView;
+        TextView title;
         LinearLayout layout;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
             title = (TextView) itemView.findViewById(R.id.title);
-            bookmark = (ImageView) itemView.findViewById(R.id.bookmark);
             layout = (LinearLayout) itemView.findViewById(R.id.layout);
-            views = (TextView) itemView.findViewById(R.id.views);
+//            bookmark = (ImageView) itemView.findViewById(R.id.bookmark);
+//            views = (TextView) itemView.findViewById(R.id.views);
         }
     }
 }

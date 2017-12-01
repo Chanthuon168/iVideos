@@ -221,7 +221,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="12dp"
-                            android:text="LDP Cambodia for android v1.2"
+                            android:text="LDP Mobile for android v1.8"
                             android:textColor="@color/secondText"
                             android:textSize="16dp" />
 

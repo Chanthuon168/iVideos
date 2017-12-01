@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.hammercolab.theldpkh.ApiClient;
 import com.hammercolab.theldpkh.ApiInterface;
@@ -35,7 +36,7 @@ public class FragmentLife extends Fragment {
     private RecyclerView recyclerView;
     private GridLayoutManager layoutManager;
     private VideoAdapter adapter;
-    private SwipeRefreshLayout swipeRefresh;
+    private LinearLayout lProgress;
     private User user;
     private Video video;
     int videoPage = 1;
@@ -51,17 +52,14 @@ public class FragmentLife extends Fragment {
         user = PrefUtils.getCurrentUser(getActivity());
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
-        swipeRefresh.setRefreshing(true);
-        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        lProgress = (LinearLayout) view.findViewById(R.id.progress);
 
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getVideoCategory(videoPage);
-            }
-        });
+        return view;
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         videoList = new ArrayList<>();
 
         getVideoCategory(videoPage);
@@ -79,8 +77,6 @@ public class FragmentLife extends Fragment {
                 getVideoCategory(page);
             }
         });
-
-        return view;
     }
 
     private void getVideoCategory(final int page) {
@@ -92,14 +88,14 @@ public class FragmentLife extends Fragment {
             callComment.enqueue(new Callback<List<Video>>() {
                 @Override
                 public void onResponse(Call<List<Video>> call, Response<List<Video>> response) {
-                    swipeRefresh.setRefreshing(false);
+                    lProgress.setVisibility(View.GONE);
                     videoList.addAll(response.body());
                     adapter.notifyItemRangeInserted(adapter.getItemCount(), videoList.size() - 1);
                 }
 
                 @Override
                 public void onFailure(Call<List<Video>> call, Throwable t) {
-                    swipeRefresh.setRefreshing(false);
+                    lProgress.setVisibility(View.GONE);
                 }
             });
         }

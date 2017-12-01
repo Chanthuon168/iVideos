@@ -47,7 +47,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_itm, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
     }
@@ -59,54 +59,54 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
         context = holder.imageView.getContext();
         Picasso.with(context).load(uri).into(holder.imageView);
         holder.title.setText(videos.get(position).getTitle());
-        String viewCount = videos.get(position).getViewCount();
-        if (!viewCount.equals("")) {
-            String views = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(viewCount));
-            holder.views.setText(views + " views");
-        }
+//        String viewCount = videos.get(position).getViewCount();
+//        if (!viewCount.equals("")) {
+//            String views = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(viewCount));
+//            holder.views.setText(views + " views");
+//        }
 
-        holder.bookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                favorite = new Favorite(user.getSession(), videos.get(position).getId());
-                ApiInterface service = ApiClient.getClient().create(ApiInterface.class);
-                final Call<Favorite> favoriteCall = service.createFavorite(favorite);
-                favoriteCall.enqueue(new Callback<Favorite>() {
-                    @Override
-                    public void onResponse(Call<Favorite> call, Response<Favorite> response) {
-                        favorite = response.body();
-                        if (favorite.getMsg().equals("checked")) {
-                            holder.bookmark.setImageResource(R.drawable.bookmarked);
-                            favorite = new Favorite(user.getSession(), videos.get(position).getId());
-                            ApiInterface mService = ApiClient.getClient().create(ApiInterface.class);
-                            Call<List<Video>> mCall = mService.deleteFavorite(favorite);
-                            mCall.enqueue(new Callback<List<Video>>() {
-                                @Override
-                                public void onResponse(Call<List<Video>> call, Response<List<Video>> response) {
-                                    videos = response.body();
-                                    notifyDataSetChanged();
-                                }
-
-                                @Override
-                                public void onFailure(Call<List<Video>> call, Throwable t) {
-
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Favorite> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-        if (videos.get(position).getFavorite().equals("checked")) {
-            holder.bookmark.setImageResource(R.drawable.bookmarked);
-        } else {
-            holder.bookmark.setImageResource(R.drawable.bookmark);
-        }
+//        holder.bookmark.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                favorite = new Favorite(user.getSession(), videos.get(position).getId());
+//                ApiInterface service = ApiClient.getClient().create(ApiInterface.class);
+//                final Call<Favorite> favoriteCall = service.createFavorite(favorite);
+//                favoriteCall.enqueue(new Callback<Favorite>() {
+//                    @Override
+//                    public void onResponse(Call<Favorite> call, Response<Favorite> response) {
+//                        favorite = response.body();
+//                        if (favorite.getMsg().equals("checked")) {
+//                            holder.bookmark.setImageResource(R.drawable.bookmarked);
+//                            favorite = new Favorite(user.getSession(), videos.get(position).getId());
+//                            ApiInterface mService = ApiClient.getClient().create(ApiInterface.class);
+//                            Call<List<Video>> mCall = mService.deleteFavorite(favorite);
+//                            mCall.enqueue(new Callback<List<Video>>() {
+//                                @Override
+//                                public void onResponse(Call<List<Video>> call, Response<List<Video>> response) {
+//                                    videos = response.body();
+//                                    notifyDataSetChanged();
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<List<Video>> call, Throwable t) {
+//
+//                                }
+//                            });
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Favorite> call, Throwable t) {
+//
+//                    }
+//                });
+//            }
+//        });
+//        if (videos.get(position).getFavorite().equals("checked")) {
+//            holder.bookmark.setImageResource(R.drawable.bookmarked);
+//        } else {
+//            holder.bookmark.setImageResource(R.drawable.bookmark);
+//        }
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,16 +131,16 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView, bookmark;
-        TextView title, views;
+        ImageView imageView;
+        TextView title;
         LinearLayout layout;
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
             title = (TextView) itemView.findViewById(R.id.title);
-            bookmark = (ImageView) itemView.findViewById(R.id.bookmark);
             layout = (LinearLayout) itemView.findViewById(R.id.layout);
-            views = (TextView) itemView.findViewById(R.id.views);
+//            bookmark = (ImageView) itemView.findViewById(R.id.bookmark);
+//            views = (TextView) itemView.findViewById(R.id.views);
         }
     }
 }

@@ -4,19 +4,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -49,7 +54,7 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
     private VideoPlayAdapter adapter;
     private String title, code, viewCount, likeCount, dislikeCount, favorite;
     private TextView txtTitle, txtViewCount, txtLikeCount, txtDislikeCount;
-    private SwipeRefreshLayout swipeRefresh;
+    private LinearLayout lProgress;
     private int sizeVideo;
     private ImageView bookmark;
     private Favorite mFavorite;
@@ -58,6 +63,7 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
     private Video video;
     int videoPage = 1;
     List<Video> videoList;
+    private LinearLayout mainLayout;
 
     public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -71,9 +77,9 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
             favorite = intent.getStringExtra("favorite");
 
             if (favorite.equals("checked")) {
-                bookmark.setImageResource(R.drawable.bookmarked);
+                bookmark.setImageResource(R.drawable.cloud_check);
             } else {
-                bookmark.setImageResource(R.drawable.bookmark);
+                bookmark.setImageResource(R.drawable.cloud_download);
             }
 
             String views = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(viewCount));
@@ -110,7 +116,7 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_activity_play);
         user = PrefUtils.getCurrentUser(ActivityPlay.this);
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        lProgress = (LinearLayout) findViewById(R.id.progress);
         youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         txtTitle = (TextView) findViewById(R.id.title);
         txtViewCount = (TextView) findViewById(R.id.viewCount);
@@ -118,6 +124,7 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
         txtDislikeCount = (TextView) findViewById(R.id.dislikeCount);
         findViewById(R.id.share).setOnClickListener(this);
         bookmark = (ImageView) findViewById(R.id.bookmark);
+        mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
         bookmark.setOnClickListener(this);
         videoList = new ArrayList<>();
 
@@ -130,9 +137,9 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
         favorite = getIntent().getStringExtra("favorite");
 
         if (favorite.equals("checked")) {
-            bookmark.setImageResource(R.drawable.bookmarked);
+            bookmark.setImageResource(R.drawable.cloud_check);
         } else {
-            bookmark.setImageResource(R.drawable.bookmark);
+            bookmark.setImageResource(R.drawable.cloud_download);
         }
 
         String views = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(viewCount));
@@ -155,17 +162,6 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
         recyclerView.setNestedScrollingEnabled(false);
         adapter = new VideoPlayAdapter(ActivityPlay.this, videoList);
         recyclerView.setAdapter(adapter);
-
-        swipeRefresh.setRefreshing(true);
-        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getVideoAll(videoPage);
-            }
-        });
-
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page) {
@@ -188,7 +184,7 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
             public void onResponse(Call<List<Video>> call, Response<List<Video>> response) {
                 videos = response.body();
                 sizeVideo = videos.size();
-                swipeRefresh.setRefreshing(false);
+                lProgress.setVisibility(View.GONE);
                 if (videos.size() > 0) {
                     videoList.addAll(response.body());
                     adapter.notifyItemRangeInserted(adapter.getItemCount(), videoList.size() - 1);
@@ -197,7 +193,7 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
 
             @Override
             public void onFailure(Call<List<Video>> call, Throwable t) {
-                swipeRefresh.setRefreshing(false);
+                lProgress.setVisibility(View.GONE);
             }
         });
     }
@@ -263,9 +259,15 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
                     public void onResponse(Call<Favorite> call, Response<Favorite> response) {
                         mFavorite = response.body();
                         if (mFavorite.getMsg().equals("checked")) {
-                            bookmark.setImageResource(R.drawable.bookmarked);
+                            bookmark.setImageResource(R.drawable.cloud_check);
+                            Snackbar snackbar = Snackbar
+                                    .make(mainLayout, "Video was saved on favorite", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                         } else {
-                            bookmark.setImageResource(R.drawable.bookmark);
+                            bookmark.setImageResource(R.drawable.cloud_download);
+                            Snackbar snackbar = Snackbar
+                                    .make(mainLayout, "Video was removed from favorite", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                         }
                     }
 
@@ -284,5 +286,15 @@ public class ActivityPlay extends YouTubeBaseActivity implements YouTubePlayer.O
             mPlayer.release();
         }
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 }

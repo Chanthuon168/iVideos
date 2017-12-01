@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">The LDP KH</string>
+    <string name="app_name">LDP Mobile</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,7 +13,8 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <string name="banner_home_footer"> ca-app-pub-9850528227996386/4813361153</string>
+    <string name="banner_home_footer">ca-app-pub-9850528227996386/4813361153</string>
     <string name="interstitial_full_screen">ca-app-pub-9850528227996386/7766827554</string>
     <string name="copyright">Copyright \u00a9 2017</string>
+    <string name="facebook_app_id">132320267342779</string>
 </resources>
